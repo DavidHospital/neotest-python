@@ -1,5 +1,4 @@
-local nio = require("nio")
-local lib = require("neotest.lib")
+local nio = require
 
 -- Simple logger using vim.notify
 local function log(msg)
@@ -8,7 +7,6 @@ local function log(msg)
   end)
 end
 
-("nio")
 local lib = require("neotest.lib")
 local pytest = require("neotest-python.pytest")
 local base = require("neotest-python.base")
