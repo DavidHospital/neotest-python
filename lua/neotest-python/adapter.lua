@@ -1,5 +1,15 @@
 local nio = require("nio")
 local lib = require("neotest.lib")
+
+-- Simple logger using vim.notify
+local function log(msg)
+  vim.schedule(function()
+    vim.notify("[neotest-python] " .. msg, vim.log.levels.DEBUG)
+  end)
+end
+
+("nio")
+local lib = require("neotest.lib")
 local pytest = require("neotest-python.pytest")
 local base = require("neotest-python.base")
 local Job = require("plenary.job")
@@ -7,6 +17,8 @@ local Path = require("plenary.path")
 
 --- Run `pytest --collect-only` with JSON report to respect pytest.ini
 local function collect_with_pytest(path, root, python_command)
+  log("collect_with_pytest path="..path.." root="..root)
+  -- Ensure pytest-json-report plugin is installed(path, root, python_command)
   -- Ensure pytest-json-report plugin is installed
   local report_file = root .. "/.neotest-report.json"
   local args = vim.tbl_flatten({ python_command, {
@@ -17,6 +29,7 @@ local function collect_with_pytest(path, root, python_command)
     "--json-report-file=", report_file,
   }})
   -- Execute pytest collection
+    log("Running pytest: " .. vim.inspect(args))
   Job:new({
     command = args[1],
     args = vim.list_slice(args, 2),
